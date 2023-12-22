@@ -1,0 +1,82 @@
+﻿@model PagedList.IPagedList<DACSWebCaFeSunDay.Models.EF.Order>
+@using PagedList.Mvc;
+@using DACSWebCaFeSunDay.Common
+@{
+    ViewBag.Title = "Purchase History";
+}
+<link rel="stylesheet" type="text/css" href="~/Content/assets/styles/main_styles.css">
+<style>
+    .news_section_container {
+        margin-top: 180px
+    }
+</style>
+<div class="container news_section_container">
+    <div class="row">
+        <div class="col-md-12">
+            <h1 class="title-news">Lịch sử mua hàng</h1>
+        </div>
+    </div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>STT</th>
+                <th>Ảnh sản phẩm</th>
+                <th>Tên sản phẩm</th>
+                <th>Giá</th>
+                <th>Số lượng</th>
+                <th>Thành tiền</th>
+                <th>Trạng thái thanh toán</th>
+                <th>Trạng thái giao hàng</th>
+                <th>Trạng thái đơn hàng</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model != null && Model.Any())
+            {
+                var i = 0;
+                foreach (var order in Model)
+                {
+                    foreach (var orderDetail in order.OrderDetails)
+                    {
+                        <tr>
+                            <td>@(i + 1)</td>
+                            <td><img src="@orderDetail.Product.Image" alt="Hình ảnh sản phẩm" width="60" /></td>
+                            <td>@orderDetail.Product.Title</td>
+                            <td>@Common.FormatNumber(orderDetail.Product.Price, 0)</td>
+                            <td>@orderDetail.Quantity</td>
+                            <td>@Common.FormatNumber(order.TotalAmount, 2)</td>
+
+
+                            <td>@Html.Raw(order.TypePayment == 1 ? "Chờ xử lý" : "Hoàn thành")</td>
+                            <td>@Html.Raw(order.DeliveryStatus == 3 ? "Chờ xử lý" : "Hoàn thành")</td>
+                            <td>
+                                @if (orderDetail.Order.Cancelled)
+                                {
+                                    <span class="text-danger">@order.CancelledMessage</span>
+                                }
+                                else
+                                {
+
+                                }
+                            </td>
+                        </tr>
+                        i++;
+                    }
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="8">Không có đơn hàng nào trong lịch sử mua hàng!!</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <a href="/Account/Profile" class="btn btn-dark">Quay Lại </a>
+    <div class="row">
+        <div class="col-6"></div>
+        <div class="col-6" style="text-align:right;">
+            @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
+        </div>
+    </div>
+</div>

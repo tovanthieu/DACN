@@ -1,0 +1,124 @@
+﻿@using DACSWebCaFeSunDay.Models
+@using DACSWebCaFeSunDay.Common
+@model LoginViewModel
+@{
+    Layout = null;
+    ViewBag.Title = "Tài Khoản";
+}
+<link rel="shortcut icon" type="image/png" href=@SettingHelper.GetValue("SettingLoGo") />
+<title>Đăng Nhập</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #D2B48C; /* Màu nền và hình nền cùng một màu nhẹ hơn */
+        margin: 0; /* Xóa margin mặc định của body */
+        padding: 0; /* Xóa padding mặc định của body */
+    }
+
+    .container {
+        max-width: 500px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #CD853F; /* Màu nền và hình nền cùng một màu nhẹ hơn */
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+        text-align: center;
+        margin-bottom: 20px;
+        color: #000;
+    }
+
+    /* Các quy tắc màu sắc khác bạn có thể thêm tại đây */
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    label {
+        font-weight: bold;
+        color: #000;
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 10px;
+        border-radius: 4px;
+        border: 1px solid #ccc;
+        background-color: #D2B48C; /* Màu nền và hình nền cùng một màu nhẹ hơn */
+        color: #000; /* Màu chữ đen */
+    }
+
+    .checkbox {
+        margin-top: 10px;
+        margin-bottom: 20px;
+    }
+
+    .btn {
+        display: inline-block;
+        padding: 10px 20px;
+        margin-right: 10px;
+        border-radius: 4px;
+        border: none;
+        background-color: #A0522D; /* Màu cà phê đậm, bạn có thể điều chỉnh */
+        color: #FFF;
+        text-decoration: none;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+        .btn:hover {
+            background-color: #CD853F; /* Màu hover một chút sáng hơn */
+        }
+
+    .text-sm {
+        font-size: 14px;
+        color: #FFF; /* Màu chữ trắng */
+    }
+
+    .text-danger {
+        color: #ff0000;
+    }
+
+    .text-center {
+        text-align: center;
+    }
+
+    /* Các quy tắc màu sắc khác bạn có thể thêm tại đây */
+</style>
+
+
+
+<body>
+    <div class="container">
+        <h2>Tài Khoản</h2>
+        <form action="@Url.Action("Login", "Account")" method="post" role="form">
+            @Html.AntiForgeryToken()
+
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(m => m.UserName)
+                @Html.TextBoxFor(m => m.UserName, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.UserName, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.Password)
+                @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group text-center">
+                <input type="submit" value="Đăng Nhập" class="btn btn-outline-dark text-sm" />
+                <a href="/account/register" class="btn btn-outline-dark text-sm">Đăng Ký</a>
+            </div>
+
+            <p>
+                @Html.ActionLink("Quên mật khẩu", "ForgotPassword")
+            </p>
+            <a href="/">Trang Chủ</a>
+        </form>
+    </div>
+</body>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

@@ -1,0 +1,103 @@
+﻿@model PagedList.PagedList<DACSWebCaFeSunDay.Models.EF.Wishlist>
+@using PagedList.Mvc;
+@using PagedList;
+@{
+    ViewBag.Title = "Index";
+}
+<link rel="stylesheet" type="text/css" href="~/Content/assets/styles/main_styles.css">
+<style>
+    .news_section_container {
+        margin-top: 180px
+    }
+
+    .title-news {
+        font-size: 24px;
+        border-bottom: 1px solid;
+        padding: 15px 0;
+        margin-bottom: 25px;
+    }
+
+    .row-item-new {
+        margin-bottom: 25px;
+    }
+
+    .img-box {
+        position: relative;
+        overflow: hidden;
+    }
+
+    .img-box {
+        position: relative;
+        overflow: hidden;
+    }
+
+        .img-box img {
+            width: 100%;
+            height: auto;
+        }
+</style>
+<div class="container news_section_container">
+    <div class="row">
+        <div class="col-md-12">
+            <h1 class="title-news">Sản Phẩm yêu thích</h1>
+        </div>
+    </div>
+    @if (Model != null && Model.Any())
+    {
+        foreach (var item in Model)
+        {
+            <div class="row row-item-new">
+                <div class="col-md-3">
+                    <div class="img-box">
+                        <a href="" title="@item.Product.Title"><img src="@item.Product.Image" alt="@item.Product.Title" /></a>
+                    </div>
+                </div>
+                <div class="col-md-9">
+                    <div class="content-box">
+                        <h3><a  title="@item.Product.Title">@item.Product.Title</a></h3>
+                        <div class="description-box">
+                            @item.Product.Description
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <button class="btn btn-danger btn-remove-wishlist" data-id="@item.ProductId">Xóa khỏi yêu thích</button>
+                </div>
+            </div>
+
+        }
+
+        <div class="row">
+            <div class="col-6"></div>
+            <div class="col-6" style="text-align:right;">
+                @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
+            </div>
+        </div>
+    }
+    <a href="/Account/Profile" class="btn btn-dark">Quay Lại </a>
+</div>
+@section scripts {
+    <script>
+        $(document).ready(function () {
+            $(".btn-remove-wishlist").click(function () {
+                var productId = $(this).data("id");
+                $.ajax({
+                    url: "/Wishlist/PostDeleteWishList",
+                    type: "POST",
+                    data: { ProductId: productId },
+                    success: function (data) {
+                        if (data.Success) {
+                            // Xóa thành công, cập nhật lại trang
+                            location.reload();
+                        } else {
+                            alert(data.Message);
+                        }
+                    },
+                    error: function () {
+                        alert("Đã xảy ra lỗi khi xóa khỏi danh sách yêu thích.");
+                    }
+                });
+            });
+        });
+    </script>
+}

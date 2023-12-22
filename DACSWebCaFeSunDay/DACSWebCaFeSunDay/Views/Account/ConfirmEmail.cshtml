@@ -1,0 +1,18 @@
+﻿    Layout = null;
+
+@using DACSWebCaFeSunDay.Common
+<link rel="shortcut icon" type="image/png" href=@SettingHelper.GetValue("SettingLoGo") />
+<link rel="stylesheet" type="text/css" href="~/Content/assets/styles/main_styles.css">
+
+<div class="header">
+    <div class="contrainer" style="margin-top: 300px">
+        <main aria-labelledby="title">
+            <h2 id="title">@ViewBag.Title Cảm ơn bạn đã xác nhận Email.</h2>
+            <div>
+                <p>
+                    @Html.ActionLink("Ấn vào đây để đăng nhập", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })
+                </p>
+            </div>
+        </main>
+    </div>
+</div>

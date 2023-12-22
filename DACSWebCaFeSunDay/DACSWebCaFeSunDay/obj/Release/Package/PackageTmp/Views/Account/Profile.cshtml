@@ -1,0 +1,82 @@
+﻿@model DACSWebCaFeSunDay.Models.CreateAccountViewModel
+@{
+    ViewBag.Title = "Profile";
+}
+
+<link rel="stylesheet" type="text/css" href="~/Content/assets/styles/main_styles.css">
+<style>
+    .profile-container {
+        margin-top: 50px;
+    }
+
+    .profile-section {
+        margin-bottom: 30px;
+    }
+
+    .title-news {
+        font-size: 24px;
+        margin-bottom: 15px;
+    }
+
+    .profile-label {
+        font-weight: bold;
+        display: inline-block;
+        width: 150px;
+    }
+
+    .profile-info {
+        margin-bottom: 15px;
+        overflow: hidden;
+    }
+
+    .profile-btn {
+        margin-top: 15px;
+        display: flex;
+    }
+
+        .profile-btn a {
+            display: inline-block;
+            margin-right: 10px;
+        }
+
+    .img-box img {
+        max-width: 100%;
+        max-height: 100%;
+    }
+</style>
+<div class="container profile-container">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="profile-section">
+                <h2 class="title-news">----- </h2>
+                <h2 class="title-news"> -----</h2>
+                <h2 class="title-news">--------------------------------------</h2>
+                <h2 class="title-news">Thông tin cá nhân</h2>
+                <div class="profile-info">
+                    <label class="profile-label">Tên đầy đủ:</label>
+                    <span>@Model.FullName</span>
+                </div>
+                <div class="profile-info">
+                    <label class="profile-label">Tên tài khoản:</label>
+                    <span>@Model.UserName</span>
+                </div>
+                <div class="profile-info">
+                    <label class="profile-label">Số điện thoại:</label>
+                    <span>@Model.Phone</span>
+                </div>
+                <div class="profile-info">
+                    <label class="profile-label">Email:</label>
+                    <span>@Model.Email</span>
+                </div>
+                <div class="profile-btn">
+                    <a href="/Account/ProfileEdit" class="btn btn-warning">Chỉnh sửa thông tin</a>
+                    <a href="/Account/ChangePassword" class="btn btn-warning">Đổi mật khẩu</a>
+                    <a href="/Wishlist" class="btn btn-warning">Sản phẩm yêu thích</a>
+                    
+                    <a href="/PurchaseHistory" class="btn btn-warning">Lịch sử mua hàng</a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

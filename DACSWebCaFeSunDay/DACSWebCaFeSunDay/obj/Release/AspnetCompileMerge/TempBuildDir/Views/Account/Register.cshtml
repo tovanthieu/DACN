@@ -1,0 +1,149 @@
+﻿@model DACSWebCaFeSunDay.Models.RegisterViewModel
+@using DACSWebCaFeSunDay.Common
+@{
+    Layout = null;
+    ViewBag.Title = "Đăng Ký tài khoản";
+}
+<link rel="shortcut icon" type="image/png" href=@SettingHelper.GetValue("SettingLoGo") />
+<title>Đăng Ký</title>
+<style>
+    body {
+        background-color: #D2B48C;
+        margin: 0;
+        padding: 0;
+    }
+
+    .header {
+        text-align: center;
+        margin-top: 100px;
+    }
+
+    .form-container {
+        background-color: #D2B48C;
+        border: 1px solid #dddddd;
+        border-radius: 5px;
+        padding: 20px;
+        width: 400px;
+        margin: 0 auto;
+    }
+
+        .form-container h2 {
+            margin-bottom: 20px;
+            color: #000; /* Màu chữ đen */
+        }
+
+        .form-container h4 {
+            margin-bottom: 10px;
+            color: #000; /* Màu chữ đen */
+        }
+
+        .form-container h8 {
+            margin-bottom: 20px;
+            color: #000; /* Màu chữ đen */
+        }
+
+        .form-container hr {
+            margin-bottom: 20px;
+        }
+
+        .form-container .form-group label {
+            font-weight: bold;
+            color: #000; /* Màu chữ đen */
+        }
+
+        .form-container .form-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #dddddd;
+            border-radius: 3px;
+            margin-bottom: 10px;
+        }
+
+        .form-container .form-group .btn {
+            width: 100%;
+            padding: 10px;
+        }
+
+            .form-container .form-group .btn:last-child {
+                margin-top: 10px;
+            }
+
+        .form-container .form-group .btn-outline-dark {
+            border-color: #343a40;
+            color: #343a40;
+        }
+
+            .form-container .form-group .btn-outline-dark:hover {
+                background-color: #343a40;
+                color: #ffffff;
+            }
+
+            .form-container .form-group .btn-outline-dark:focus {
+                box-shadow: none;
+            }
+
+        .form-container .form-group .text-danger {
+            margin-top: 5px;
+        }
+
+            .form-container .form-group .text-danger ul {
+                margin-bottom: 0;
+            }
+
+            .form-container .form-group .text-danger li {
+                list-style-type: none;
+                font-size: 12px;
+            }
+</style>
+
+<div class="header">
+    <div class="form-container">
+        <h2>Đăng Ký tài khoản</h2>
+        @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { role = "form" }))
+        {
+            @Html.AntiForgeryToken()
+            <h4>Tạo tài khoản mới.</h4>
+            <h8>Vui lòng sau khi đăng ký vô email của bạn để xác thực.</h8>
+            <hr />
+            @Html.ValidationSummary("", new { @class = "text-danger" })
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.FullName)
+                @Html.TextBoxFor(m => m.FullName, new { @class = "form-control" })
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.Phone)
+                @Html.TextBoxFor(m => m.Phone, new { @class = "form-control" })
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.Email)
+                @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.Password)
+                @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.ConfirmPassword)
+                @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Đăng Ký" class="btn btn-outline-dark" />
+            </div>
+
+            <p>
+                <a href="/account/login" class="btn btn-outline-dark">Đã có tài khoản</a>
+                <a href="/" class="btn btn-outline-dark">Trang Chủ</a>
+            </p>
+        }
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

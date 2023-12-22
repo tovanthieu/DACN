@@ -1,0 +1,58 @@
+﻿@model DACSWebCaFeSunDay.Models.EF.ReviewProduct
+
+
+<div class="add_review">
+    @using (Ajax.BeginForm("PostReview", "Review", new AjaxOptions
+    {
+        HttpMethod = "POST",
+        UpdateTargetId = "load_review",
+        OnSuccess = "OnSuccessRE",
+        OnFailure = "OnFailureRE",
+        OnBegin = "OnBeginRE"
+
+    }, new { @Id = "review_form" }))
+    {
+        <script>
+            function OnBeginRE() {
+            $('#review_submit').attr("disabled", "disabled");
+            $('#load_send').html('<h2>Đang gửi....</h2>');
+            }
+            function OnSuccessRE(res) {
+                debugger;
+                if (res.Success) {
+                    
+                    $("#review_form")[0].reset();
+                    location.reload(review_form);
+                }
+            }
+        </script>
+        @Html.AntiForgeryToken()@*<form id="review_form" action="post"></form>*@
+       
+<div>
+    <h1>Thêm Review về sản phẩm</h1>
+    @Html.TextBoxFor(x => x.FullName, new { @Class = "form_input input_name", @placeholder = "Họ Tên", @id = "review_name" })
+    @Html.TextBoxFor(x => x.Email, new { @Class = "form_input input_name", @placeholder = "Email", @id = "review_email" })
+    @Html.HiddenFor(x => x.UserName)
+    @Html.HiddenFor(x => x.ProductId, new { @Value= ViewBag.ProductId })
+    <input type="text" id="txtRate" name="Rate" value="4" style="visibility:hidden;">
+    @*<input id="review_name" class="form_input input_name" type="text" name="name" placeholder="Name" required="required" data-error="Còn thiếu tên">*@
+    @*<input id="review_email" class="form_input input_name" type="email" name="email" placeholder="Email" required="required" data-error="Email là cần thiết">*@
+</div>
+        <div>
+            <h1>Đánh giá của bạn</h1>
+            <ul class="user_star_rating">
+                <li><i class="fa fa-star" aria-hidden="true"></i></li>
+                <li><i class="fa fa-star" aria-hidden="true"></i></li>
+                <li><i class="fa fa-star" aria-hidden="true"></i></li>
+                <li><i class="fa fa-star" aria-hidden="true"></i></li>
+                <li><i class="fa fa-star" aria-hidden="true"></i></li>
+            </ul>
+            @Html.TextAreaFor(x => x.Content, new { @Class = "input_review", @row = "4", @placeholder = "Đánh giá của bạn" })
+            @*<textarea id="review_message" class="input_review" name="message" placeholder="Your Review" rows="4" required data-error="Xin hãy để lại đánh giá cho sản phẩm"></textarea>*@
+        </div>
+        <div class="text-left text-sm-right">
+            <button id="review_submit" type="submit" class="red_button review_submit_btn trans_300" value="Submit" >Xác nhận</button>
+        </div>
+    }
+ </div>
+

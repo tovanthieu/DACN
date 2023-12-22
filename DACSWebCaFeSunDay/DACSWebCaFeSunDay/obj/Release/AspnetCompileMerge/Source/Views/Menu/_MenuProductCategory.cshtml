@@ -1,0 +1,38 @@
+﻿@model IEnumerable<DACSWebCaFeSunDay.Models.EF.ProductCategory>
+
+@if (Model != null && Model.Any())
+{
+    <style>
+        .banner_item {
+            position: relative;
+        }
+
+        .banner_category {
+            position: absolute;
+            top: 0; /* Đặt top thành 0 để đưa chữ lên trên */
+            left: 0;
+            right: 0;
+            background-color: rgba(255, 255, 255, 0.7); /* Thêm màu nền với độ trong suốt */
+            padding: 10px; /* Thêm padding để tạo khoảng cách xung quanh chữ */
+            text-align: center; /* Căn giữa văn bản */
+        }
+    </style>
+
+    <div class="banner">
+        <div class="container">
+            <div class="row">
+                @foreach (var item in Model)
+                {
+                    <div class="col-md-4">
+                        <div class="banner_item align-items-center" style="background-image: url(@item.Icon)">
+                            <div class="banner_category">
+                                <a onclick="@item.Alias">@item.Title</a>
+                            </div>
+                            
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+}
